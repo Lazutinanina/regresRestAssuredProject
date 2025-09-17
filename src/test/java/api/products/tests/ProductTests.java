@@ -18,7 +18,7 @@ public class ProductTests {
     public void getAllProducts() {
         Response response = productService.getAllProductsResponse();
         response.prettyPrint();
-        assertEquals(response.statusCode(), 200);
+        assertEquals(200, response.statusCode());
     }
 
     @Test
@@ -32,14 +32,14 @@ public class ProductTests {
     @Test
     public void getRandomProductAndCheck() {
         Response response = productService.getAllProductsResponse();//получаю все продукты
-        assertEquals(response.getStatusCode(), 200);//проверяю статус код
+        assertEquals(200, response.getStatusCode());//проверяю статус код
 
         List<Integer> id = response.jsonPath().getList("id", Integer.class);//собираю все id в лист
         assertNotNull(id);
         Integer randomId = id.get(new Random().nextInt(id.size()));
 
         Response product = productService.getProductId(randomId);
-        assertEquals(product.getStatusCode(), 200);
+        assertEquals(200, product.getStatusCode());
         product.prettyPrint();
     }
 
@@ -48,7 +48,7 @@ public class ProductTests {
         productService.getProductIdValidatable(2)
                 .statusCode(200)
                 .contentType(Config.contentTypeJson)
-                .body("id", equalTo(2))//проверка что id = 2
+                .body("id", equalTo(2))//проверка  id = 2
                 .body("image", startsWith("https://fakestoreapi.com/"))//начинается image
                 .body("$", hasKey("price"))
                 .body("id", instanceOf(Integer.class)); // тип данных
