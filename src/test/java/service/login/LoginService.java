@@ -18,7 +18,7 @@ public class LoginService {
         HashMap<String, String> userData = new HashMap<>();
         userData.put(JsonKeys.EMAIL, email);
         userData.put(JsonKeys.PASSWORD, password);
-        Response loginUserResponse = given()
+        return given()
                 .when()
                 .header(HeaderService.headerApiKey, HeaderService.headerApiKeyValue)
                 .contentType(HeaderService.contentTypeJson)
@@ -26,12 +26,11 @@ public class LoginService {
                 .post(Endpoint.baseURL + Endpoint.login)
                 .then().assertThat().statusCode(200)
                 .extract().response();
-        return loginUserResponse;
     }
 
     public Response loginUserFromPojo(String email, String password){
         LoginUserRequests userData = new LoginUserRequests(email, password);
-        Response loginUserResponse = given()
+        return given()
                 .when()
                 .header(HeaderService.headerApiKey, HeaderService.headerApiKeyValue)
                 .contentType(HeaderService.contentTypeJson)
@@ -39,7 +38,6 @@ public class LoginService {
                 .post(Endpoint.baseURL + Endpoint.login)
                 .then().statusCode(200)
                 .extract().response();
-        return loginUserResponse;
     }
 
     public Response loginUserDeserialize(String email, String password){
@@ -57,7 +55,7 @@ public class LoginService {
 
     public LoginUserResponse loginUserWithBaseSpec(String email, String password){
         LoginUserRequests userData = new LoginUserRequests(email, password);
-        LoginUserResponse loginUserResponse = given()
+        return given()
                 .spec(Specs.baseReqSpec())
                 .when()
                 .body(userData)
@@ -66,10 +64,9 @@ public class LoginService {
                 .statusCode(200)
                 .extract()
                 .as(LoginUserResponse.class); //данные из ответа преобразуются в UserResponse
-        return loginUserResponse;
     }
 
-    public ValidatableResponse loginUserValidResponse(String email, String password){//данные из ответа валидируются
+    public ValidatableResponse loginUserValidResponse(String email, String password){//данные из ответа валидируютс
         LoginUserRequests userData = new LoginUserRequests(email, password);
 
         return given()
