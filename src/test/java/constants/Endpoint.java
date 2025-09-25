@@ -8,4 +8,5 @@ public class Endpoint {
     public static final String login = "/login";
     public static final String logout = "/logout";
     public static final String users = "/users";
+    public static final String resources = "/unknown";
 }
